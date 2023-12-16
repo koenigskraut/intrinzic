@@ -3,6 +3,7 @@ const x86 = struct {
     pub const sse2 = @import("x86/sse2.zig");
     pub const sse3 = @import("x86/sse3.zig");
     pub const sse4_1 = @import("x86/sse4.1.zig");
+    pub const sse4_2 = @import("x86/sse4.2.zig");
     pub const ssse3 = @import("x86/ssse3.zig");
 
     pub const __m128d = common.__m128d;
