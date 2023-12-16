@@ -15,6 +15,14 @@ const x86 = struct {
     pub const __v2si = common.__v2si;
     pub const __v4hi = common.__v4hi;
     pub const __v8qi = common.__v8qi;
+
+    pub const _mm_shuffle = common._mm_shuffle;
+
+    pub usingnamespace sse2;
+    pub usingnamespace sse3;
+    pub usingnamespace sse4_1;
+    pub usingnamespace sse4_2;
+    pub usingnamespace ssse3;
 };
 
 pub usingnamespace x86;

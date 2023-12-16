@@ -4,33 +4,33 @@ const __m128i = common.__m128i;
 
 pub const SIDD = struct {
     /// unsigned 8-bit characters
-    const UBYTE_OPS = 0;
+    pub const UBYTE_OPS = 0;
     /// unsigned 16-bit characters
-    const UWORD_OPS = 1;
+    pub const UWORD_OPS = 1;
     /// signed 8-bit characters
-    const SBYTE_OPS = 2;
+    pub const SBYTE_OPS = 2;
     /// signed 16-bit characters
-    const SWORD_OPS = 3;
+    pub const SWORD_OPS = 3;
     /// compare equal any
-    const CMP_EQUAL_ANY = 0;
+    pub const CMP_EQUAL_ANY = 0;
     /// compare ranges
-    const CMP_RANGES = 4;
+    pub const CMP_RANGES = 4;
     /// compare equal each
-    const CMP_EQUAL_EACH = 8;
+    pub const CMP_EQUAL_EACH = 8;
     /// compare equal ordered
-    const CMP_EQUAL_ORDERED = 12;
+    pub const CMP_EQUAL_ORDERED = 12;
     /// negate results
-    const NEGATIVE_POLARITY = 16;
+    pub const NEGATIVE_POLARITY = 16;
     /// negate results only before end of string
-    const MASKED_NEGATIVE_POLARITY = 48;
+    pub const MASKED_NEGATIVE_POLARITY = 48;
     /// index only: return last significant bit
-    const LEAST_SIGNIFICANT = 0;
+    pub const LEAST_SIGNIFICANT = 0;
     /// index only: return most significant bit
-    const MOST_SIGNIFICANT = 64;
+    pub const MOST_SIGNIFICANT = 64;
     /// mask only: return bit mask
-    const BIT_MASK = 0;
+    pub const BIT_MASK = 0;
     /// mask only: return byte/word mask
-    const UNIT_MASK = 64;
+    pub const UNIT_MASK = 64;
 };
 
 // pcmpestri
