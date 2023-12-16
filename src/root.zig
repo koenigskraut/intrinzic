@@ -18,3 +18,7 @@ const x86 = struct {
 };
 
 pub usingnamespace x86;
+
+comptime {
+    @import("std").testing.refAllDeclsRecursive(x86);
+}
