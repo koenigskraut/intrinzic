@@ -76,18 +76,7 @@ pub inline fn _mm_moveldup_ps(a: __m128) __m128 {
 }
 
 const testing = @import("std").testing;
-
-fn expectApproxEqAbsVec(comptime T: type, a: T, b: T, comptime tolerance: comptime_float) !void {
-    for (a, b) |v0, v1| {
-        try testing.expectApproxEqAbs(v0, v1, tolerance);
-    }
-}
-
-fn expectApproxEqRelVec(comptime T: type, a: T, b: T, comptime tolerance: comptime_float) !void {
-    for (a, b) |v0, v1| {
-        try testing.expectApproxEqRel(v0, v1, tolerance);
-    }
-}
+const expectApproxEqAbsVec = common.expectApproxEqAbsVec;
 
 test "sse3" {
     { // _mm_addsub_pd

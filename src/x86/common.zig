@@ -17,3 +17,15 @@ pub inline fn _mm_shuffle(mask: [4]u8) u8 {
 pub inline fn clampInt(comptime To: type, v: anytype) To {
     return @truncate(std.math.clamp(v, std.math.minInt(To), std.math.maxInt(To)));
 }
+
+pub fn expectApproxEqAbsVec(comptime T: type, a: T, b: T, comptime tolerance: comptime_float) !void {
+    for (a, b) |v0, v1| {
+        try std.testing.expectApproxEqAbs(v0, v1, tolerance);
+    }
+}
+
+pub fn expectApproxEqRelVec(comptime T: type, a: T, b: T, comptime tolerance: comptime_float) !void {
+    for (a, b) |v0, v1| {
+        try std.testing.expectApproxEqRel(v0, v1, tolerance);
+    }
+}
