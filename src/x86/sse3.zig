@@ -48,9 +48,10 @@ pub inline fn _mm_hsub_ps(a: __m128, b: __m128) __m128 {
 // lddqu
 pub inline fn _mm_lddqu_si128(mem_addr: *align(1) const __m128i) __m128i {
     return asm volatile (
-        \\ lddqu  rdi, %xmm0
-        : [ret] "={xmm0}" (-> __m128i),
-        : [mem_addr] "{rdi}" (mem_addr),
+        \\ lddqu (%[addr]), %[ret]
+        : [ret] "=x" (-> __m128i),
+        : [addr] "r" (mem_addr),
+        : "memory"
     );
 }
 
@@ -103,5 +104,57 @@ test "sse3" {
             1.2 - 8.7, 3.4 + 6.5,
             5.6 - 4.3, 7.8 + 2.1,
         }, c, 0.01);
+    }
+    { // _mm_hadd_pd
+        const a = __m128d{ 12.34, 56.78 };
+        const b = __m128d{ 87.65, 43.21 };
+        const c = _mm_hadd_pd(a, b);
+        try expectApproxEqAbsVec([2]f64, .{ 12.34 + 56.78, 87.65 + 43.21 }, c, 0.001);
+    }
+    { // _mm_hadd_ps
+        const a = __m128{ 1.2, 3.4, 5.6, 7.8 };
+        const b = __m128{ 8.7, 6.5, 4.3, 2.1 };
+        const c = _mm_hadd_ps(a, b);
+        try expectApproxEqAbsVec([4]f32, .{ 1.2 + 3.4, 5.6 + 7.8, 8.7 + 6.5, 4.3 + 2.1 }, c, 0.001);
+    }
+    { // _mm_hsub_pd
+        const a = __m128d{ 12.34, 56.78 };
+        const b = __m128d{ 87.65, 43.21 };
+        const c = _mm_hsub_pd(a, b);
+        try expectApproxEqAbsVec([2]f64, .{ 12.34 - 56.78, 87.65 - 43.21 }, c, 0.001);
+    }
+    { // _mm_hsub_ps
+        const a = __m128{ 1.2, 3.4, 5.6, 7.8 };
+        const b = __m128{ 8.7, 6.5, 4.3, 2.1 };
+        const c = _mm_hsub_ps(a, b);
+        try expectApproxEqAbsVec([4]f32, .{ 1.2 - 3.4, 5.6 - 7.8, 8.7 - 6.5, 4.3 - 2.1 }, c, 0.001);
+    }
+    { // _mm_lddqu_si128
+        const mem = [16]u8{ 1, 2, 3, 4, 0, 0, 0, 0, 5, 6, 7, 8, 0, 0, 0, 0 };
+        const a = _mm_lddqu_si128(@ptrCast(&mem));
+        try testing.expectEqual(__m128i{ 0x04030201, 0x08070605 }, a);
+    }
+    { // movddup
+        const a: f64 = 12.34;
+        const b = _mm_loaddup_pd(&a);
+        try expectApproxEqAbsVec([2]f64, .{ a, a }, b, 0.001);
+    }
+
+    { // movddup
+        const a = __m128d{ 12.34, 56.78 };
+        const b = _mm_movedup_pd(a);
+        try expectApproxEqAbsVec([2]f64, .{ 12.34, 12.34 }, b, 0.001);
+    }
+
+    { // movshdup
+        const a = __m128{ 1.2, 3.4, 5.6, 7.8 };
+        const b = _mm_movehdup_ps(a);
+        try expectApproxEqAbsVec([4]f32, .{ 3.4, 3.4, 7.8, 7.8 }, b, 0.01);
+    }
+
+    { // movsldup
+        const a = __m128{ 1.2, 3.4, 5.6, 7.8 };
+        const b = _mm_moveldup_ps(a);
+        try expectApproxEqAbsVec([4]f32, .{ 1.2, 1.2, 5.6, 5.6 }, b, 0.01);
     }
 }
