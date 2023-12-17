@@ -27,33 +27,33 @@ pub inline fn _mm_blend_ps(a: __m128, b: __m128, comptime imm8: u4) __m128 {
 // pblendvb
 pub inline fn _mm_blendv_epi8(a: __m128i, b: __m128i, mask: __m128i) __m128i {
     return asm volatile (
-        \\ pblendvb %xmm0, %xmm1, %xmm2
-        : [ret] "={xmm0}" (-> __m128i),
-        : [a] "{xmm0}" (a),
+        \\ pblendvb %[mask], %[b], %[a]
+        : [ret] "={xmm3}" (-> __m128i),
+        : [a] "{xmm3}" (a),
           [b] "{xmm1}" (b),
-          [mask] "{xmm2}" (mask),
+          [mask] "{xmm0}" (mask),
     );
 }
 
 // blendvpd
 pub inline fn _mm_blendv_pd(a: __m128d, b: __m128d, mask: __m128d) __m128d {
     return asm volatile (
-        \\ blendvpd %xmm0, %xmm1, %xmm2
-        : [ret] "={xmm0}" (-> __m128d),
-        : [a] "{xmm0}" (a),
+        \\ blendvpd %[mask], %[b], %[a]
+        : [ret] "={xmm3}" (-> __m128d),
+        : [a] "{xmm3}" (a),
           [b] "{xmm1}" (b),
-          [mask] "{xmm2}" (mask),
+          [mask] "{xmm0}" (mask),
     );
 }
 
 // blendvps
 pub inline fn _mm_blendv_ps(a: __m128, b: __m128, mask: __m128) __m128 {
     return asm volatile (
-        \\ blendvps %xmm0, %xmm1, %xmm2
-        : [ret] "={xmm0}" (-> __m128),
-        : [a] "{xmm0}" (a),
+        \\ blendvps %[mask], %[b], %[a]
+        : [ret] "={xmm3}" (-> __m128),
+        : [a] "{xmm3}" (a),
           [b] "{xmm1}" (b),
-          [mask] "{xmm2}" (mask),
+          [mask] "{xmm0}" (mask),
     );
 }
 
