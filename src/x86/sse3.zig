@@ -123,25 +123,25 @@ test "sse3" {
         const a = _mm_lddqu_si128(@ptrCast(&mem));
         try testing.expectEqual(__m128i{ 0x04030201, 0x08070605 }, a);
     }
-    { // movddup
+    { // _mm_loaddup_pd
         const a: f64 = 12.34;
         const b = _mm_loaddup_pd(&a);
         try expectApproxEqAbsVec([2]f64, .{ a, a }, b, 0.001);
     }
 
-    { // movddup
+    { // _mm_movedup_pd
         const a = __m128d{ 12.34, 56.78 };
         const b = _mm_movedup_pd(a);
         try expectApproxEqAbsVec([2]f64, .{ 12.34, 12.34 }, b, 0.001);
     }
 
-    { // movshdup
+    { // _mm_movehdup_ps
         const a = __m128{ 1.2, 3.4, 5.6, 7.8 };
         const b = _mm_movehdup_ps(a);
         try expectApproxEqAbsVec([4]f32, .{ 3.4, 3.4, 7.8, 7.8 }, b, 0.01);
     }
 
-    { // movsldup
+    { // _mm_moveldup_ps
         const a = __m128{ 1.2, 3.4, 5.6, 7.8 };
         const b = _mm_moveldup_ps(a);
         try expectApproxEqAbsVec([4]f32, .{ 1.2, 1.2, 5.6, 5.6 }, b, 0.01);
