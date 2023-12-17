@@ -1284,7 +1284,7 @@ pub inline fn _mm_slli_epi32(a: __m128i, imm8: u32) __m128i {
 // psllq
 pub inline fn _mm_slli_epi64(a: __m128i, imm8: u32) __m128i {
     return asm volatile (
-        \\ psllq %xmm1, %[count], %[a]
+        \\ psllq %[count], %[a]
         : [ret] "=x" (-> __m128i),
         : [a] "0" (a),
           [count] "x" (imm8),
